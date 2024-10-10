@@ -61,6 +61,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->view->title = 'Home';
         return $this->render('index'); 
     }
 
@@ -105,6 +106,8 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
+        $this->view->title = 'Contact';
+
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
@@ -123,10 +126,14 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+        $this->view->title = 'About';
+
         return $this->render('about');
     }
 
     public function actionTest() {
+        $this->view->title = 'Test';
+
         return $this->render('test');
     }
 }
