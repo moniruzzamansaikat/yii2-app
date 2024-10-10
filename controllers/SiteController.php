@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SignupForm;
 
 class SiteController extends Controller
 {
@@ -17,12 +18,20 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['logout', 'login', 'signup'],
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow'   => true,
                         'roles'   => ['@'],
+                    ],
+                    [
+                        'actions' => ['login', 'signup'],
+                        'allow'   => false, // Deny access
+                        'roles'   => ['@'], // Apply this rule to authenticated users only
+                        'denyCallback' => function ($rule, $action) {
+                            return $action->controller->redirect(Yii::$app->homeUrl);
+                        },
                     ],
                 ],
             ],
@@ -54,7 +63,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->view->title = 'Home';
-        return $this->render('index'); 
+        return $this->render('index');
     }
 
     public function actionLogin()
@@ -70,6 +79,20 @@ class SiteController extends Controller
 
         $model->password = '';
         return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionSignup()
+    {
+        $model = new SignupForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+            return $this->redirect(Yii::$app->homeUrl);
+        }
+
+        $model->password = '';
+        return $this->render('signup', [
             'model' => $model,
         ]);
     }
@@ -103,7 +126,8 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionTest() {
+    public function actionTest()
+    {
         $this->view->title = 'Test';
 
         return $this->render('test');

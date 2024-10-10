@@ -44,7 +44,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Test', 'url' => ['/site/test']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login'], 'options' => ['class' => 'nav-item', 'style' => ['margin-left' => 'auto']]]
+                ? [
+                    ['label' => 'Login', 'url' => ['/site/login'], 'options' => ['class' => 'nav-item', 'style' => ['margin-left' => 'auto']]],
+                    ['label' => 'Signup', 'url' => ['/site/signup'], 'options' => ['class' => 'nav-item', 'style' => ['margin-left' => 'auto']]]
+                ]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
@@ -52,7 +55,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         ['class' => 'nav-link btn btn-danger logout']
                     )
                     . Html::endForm()
-                    . '</li>'
+                    . '</li>',
+                    
         ]
     ]);
     NavBar::end();
