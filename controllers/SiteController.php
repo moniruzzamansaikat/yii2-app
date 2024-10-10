@@ -27,8 +27,8 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => ['login', 'signup'],
-                        'allow'   => false, // Deny access
-                        'roles'   => ['@'], // Apply this rule to authenticated users only
+                        'allow'   => true, 
+                        'roles'   => ['?'], // This rule allows guest users to access the login and signup actions
                         'denyCallback' => function ($rule, $action) {
                             return $action->controller->redirect(Yii::$app->homeUrl);
                         },
