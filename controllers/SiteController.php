@@ -18,19 +18,19 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'login', 'signup'],
+                'only' => ['login', 'signup', 'logout'], // Include logout in the list
                 'rules' => [
                     [
                         'actions' => ['logout'],
                         'allow'   => true,
-                        'roles'   => ['@'],
+                        'roles'   => ['@'], // Allow only authenticated users to logout
                     ],
                     [
                         'actions' => ['login', 'signup'],
-                        'allow'   => true, 
-                        'roles'   => ['?'], // This rule allows guest users to access the login and signup actions
+                        'allow'   => true,
+                        'roles'   => ['?'], // Allow only guests to login and signup
                         'denyCallback' => function ($rule, $action) {
-                            return $action->controller->redirect(Yii::$app->homeUrl);
+                            throw new \yii\web\ForbiddenHttpException('You are not allowed to perform this action.');
                         },
                     ],
                 ],
@@ -38,11 +38,12 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post'], // Ensure logout is a POST request
                 ],
             ],
         ];
     }
+
 
     /**
      * {@inheritdoc}
