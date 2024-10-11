@@ -16,3 +16,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <code><?= __FILE__ ?></code>
 </div>
+
+<?php $this->beginBlock('styles'); ?>
+    <style>
+        body {
+            background-color: skyblue;
+        }
+        
+        .site-about {
+            margin-top: 100px;
+        }
+    </style>
+<?php $this->endBlock(); ?>
+
+
+<?php $this->beginBlock('scripts'); ?>
+    <script>
+        console.log('About page');
+    </script>
+<?php $this->endBlock(); ?>

@@ -24,6 +24,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <?php if (isset($this->blocks['styles'])): ?>
+        <?= $this->blocks['styles'] ?>
+    <?php endif; ?>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -42,7 +45,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             <a class="nav-link  <?= isActive('/site/index') ?>" href="/site/index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link <?= isActive(url: '/site/about') ?>" href="/site/about">About</a>
+                            <a class="nav-link <?= isActive('/site/about') ?>" href="/site/about">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/site/test">Test</a>
@@ -88,6 +91,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             </div>
         </div>
     </footer>
+
+    <?php
+        if (isset($this->blocks['scripts'])) {
+            echo $this->blocks['scripts'];
+        }
+    ?>
 
     <?php $this->endBody() ?>
 </body>
